@@ -56,6 +56,8 @@ badges_per_page = rows * cols
 # Calculate the number of pages required
 num_pages = math.ceil(len(data) / badges_per_page)
 
+conference_name = "QMAG"  # Define the conference name, abbreviate if needed.
+
 # Create a PdfPages object to manage the multi-page PDF
 with PdfPages(output_pdf_path) as pdf:
     for page_num in range(num_pages):
@@ -68,7 +70,8 @@ with PdfPages(output_pdf_path) as pdf:
         # Ensure the aspect ratio is equal
         ax.set_aspect('equal', adjustable='box')
 
-        # Get the subset of badges for the current page
+        # Get the subset of badges for the c
+        # current page
         start_idx = page_num * badges_per_page
         end_idx = min(start_idx + badges_per_page, len(data))
         page_data = data.iloc[start_idx:end_idx]
@@ -85,10 +88,10 @@ with PdfPages(output_pdf_path) as pdf:
             # Draw badge background with white color (no border)
             ax.add_patch(patches.Rectangle((x, y), badge_width, badge_height, edgecolor='none', facecolor='white'))
 
-            # Add "QMAG" text to the top left of the badge
-            qmag_x = x + badge_width * 0.02  # Move more to the left
-            qmag_y = y + badge_height * 0.95  # Near the top
-            ax.text(qmag_x, qmag_y, "QMAG", fontsize=12, ha='left', va='top')  # Smaller font size
+            # Add conference abbreviation text to the top left of the badge
+            conf_x = x + badge_width * 0.02  # Move more to the left
+            conf_y = y + badge_height * 0.95  # Near the top
+            ax.text(conf_x, conf_y, conference_name, fontsize=12, ha='left', va='top')  # Smaller font size
 
             # Combine first and last names
             full_name = f"{first_name} {last_name}"
